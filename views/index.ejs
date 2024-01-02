@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Form Example</title>
+  <style>
+    /* CSS styles */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+
+    .response-area {
+      margin-top: 20px;
+      background-color: #f0f0f0;
+
+      padding: 20px 5px;
+    }
+
+    #get {
+      background-color: #2ecc71;
+    }
+
+    #get:hover {
+      background-color: #27ae60;
+    }
+
+    #post {
+      background-color: #3498db;
+    }
+
+    #post:hover {
+      background-color: #2980b9;
+    }
+
+    #put {
+      background-color: #9b59b6;
+    }
+
+    #put:hover {
+      background-color: #8e44ad;
+    }
+
+    #patch {
+      background-color: #f1c40f;
+    }
+
+    #patch:hover {
+      background-color: #f39c12;
+    }
+
+    #delete {
+      background-color: #e74c3c;
+    }
+
+    #delete:hover {
+      background-color: #c0392b;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="response-area">
+      <p>
+        <%= content %>
+      </p>
+    </div>
+    <form id="myForm" method="post">
+      <p>
+        Select Category:<br />
+        <input type="radio" name="category" value="any" onclick="categoryChg()" >Any <br />
+        <input type="radio" name="category" value="custom" onclick="categoryChg()">Custom 
+        <input type="checkbox" name="categories" value="programming">Programming 
+        <input type="checkbox" name="categories" value="misc">Misc
+        <input type="checkbox" name="categories" value="dark">Dark
+        <input type="checkbox" name="categories" value="pun">Pun
+        <input type="checkbox" name="categories" value="spooky">Spooky
+        <input type="checkbox" name="categories" value="christmas">Christmas
+
+      <p>
+      <label for="amtJokes">Amount of jokes:</label>
+      <input type="number" id="amtJokes" name="amtJokes" value="1">
+
+      <!--<label for="jokeType">Joke Type:</label>
+      <input type="checkbox" id="jokeType" name="type" value="single" checked>single
+      <input type="checkbox" id="jokeType" name="type" value="two">two part  -->    
+
+      <label for="selectLanguage">Language:</label>
+      <select id="selectLanguage" name="selectLanguage" class="appendLangOpts">
+        <option value="en">en - English</option>
+        <option value="de">de - German</option>        
+        <option value="cs">cs - Czech</option>
+        <option value="es">es - Spanish</option>
+        <option value="fr">fr - French</option>
+        <option value="pt">pt - Portuguese</option>
+      </select>
+      <br /><br />
+      <input id="get" type="submit" value="GET" formaction="/get-joke">      
+    </form>
+
+    <h3>Result: </h3>
+    <p id="resultParagraph">
+      <% if (locals.content && (Array.isArray(content.jokes) || typeof content.jokes === 'object')) { %>
+        <% content.jokes.forEach((joke, index) => {%>
+          <% if (joke.type === 'single'){%>
+            <%=index + 1%>. <%= joke.joke%> <br />  <br />
+          <%}else{%>
+            <%=index + 1 %>.  <%= joke.setup%> <br />
+            Answer: <%= joke.delivery%> <br /> <br />
+          <%}%>
+        <%});%> 
+        
+      <%} else{%>
+        <%= content.setup %>
+       
+      <%}%>
+    </p>
+  </div>
+  <script src="javascript.js"></script>
+</body>
+
+</html>
